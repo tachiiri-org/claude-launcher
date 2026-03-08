@@ -1,11 +1,12 @@
-import { app, BrowserWindow } from 'electron'
-import { join } from 'path'
-import { registerIpcHandlers } from './ipc'
-import { runAppBootstrap } from './bootstrap'
+import { app, BrowserWindow } from "electron";
+import { join } from "path";
+import { registerIpcHandlers } from "./ipc";
+import { runAppBootstrap } from "./bootstrap";
+import { configureAutoUpdates } from "./updater";
 
 // Add --no-sandbox flag when running in WSL2 without a display server
-if (process.platform === 'linux') {
-  app.commandLine.appendSwitch('no-sandbox')
+if (process.platform === "linux") {
+  app.commandLine.appendSwitch("no-sandbox");
 }
 
 function createWindow(): void {
@@ -16,34 +17,35 @@ function createWindow(): void {
     minHeight: 440,
     show: false,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
     },
-    title: 'Claude Workspace Launcher',
+    title: "Claude Workspace Launcher",
     autoHideMenuBar: true,
-  })
+  });
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.maximize()
-    mainWindow.show()
-  })
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.maximize();
+    mainWindow.show();
+  });
 
-  if (process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  if (process.env["ELECTRON_RENDERER_URL"]) {
+    mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 }
 
 app.whenReady().then(() => {
-  runAppBootstrap()
-  registerIpcHandlers()
-  createWindow()
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-})
+  runAppBootstrap();
+  registerIpcHandlers();
+  createWindow();
+  configureAutoUpdates();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});

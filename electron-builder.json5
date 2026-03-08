@@ -3,21 +3,26 @@
   productName: "Claude Launcher",
   directories: {
     buildResources: "build",
-    output: "dist"
+    output: "dist",
   },
-  files: [
-    "out/**/*"
+  files: ["out/**/*"],
+  publish: [
+    {
+      provider: "github",
+      owner: "tachiiri-org",
+      repo: "claude-launcher",
+    },
   ],
   win: {
     target: [
       {
         target: "nsis",
-        arch: ["x64"]
-      }
-    ]
+        arch: ["x64"],
+      },
+    ],
   },
   nsis: {
     oneClick: false,
-    allowToChangeInstallationDirectory: true
-  }
+    allowToChangeInstallationDirectory: true,
+  },
 }
