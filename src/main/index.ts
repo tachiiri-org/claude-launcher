@@ -4,7 +4,7 @@ import { registerIpcHandlers } from './ipc'
 import { runAppBootstrap } from './bootstrap'
 
 // Add --no-sandbox flag when running in WSL2 without a display server
-if (process.platform === 'linux' && !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) {
+if (process.platform === 'linux') {
   app.commandLine.appendSwitch('no-sandbox')
 }
 
@@ -14,6 +14,7 @@ function createWindow(): void {
     height: 580,
     minWidth: 580,
     minHeight: 440,
+    show: false,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -22,13 +23,16 @@ function createWindow(): void {
     autoHideMenuBar: true,
   })
 
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize()
+    mainWindow.show()
+  })
+
   if (process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
-  mainWindow.maximize()
 }
 
 app.whenReady().then(() => {
