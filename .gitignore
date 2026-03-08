@@ -1,0 +1,8 @@
+.claude/settings.local.json
+issues/
+out/
+node_modules/
+*.tmp
+package-lock.json
+*.claude-launcher.json
+test-results/
