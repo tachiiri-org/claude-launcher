@@ -5,3 +5,4 @@ node_modules/
 *.tmp
 package-lock.json
 *.claude-launcher.json
+test-results/
