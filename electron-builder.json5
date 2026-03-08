@@ -1,0 +1,23 @@
+{
+  appId: "com.tachiiri.claude-launcher",
+  productName: "Claude Launcher",
+  directories: {
+    buildResources: "build",
+    output: "dist"
+  },
+  files: [
+    "out/**/*"
+  ],
+  win: {
+    target: [
+      {
+        target: "nsis",
+        arch: ["x64"]
+      }
+    ]
+  },
+  nsis: {
+    oneClick: false,
+    allowToChangeInstallationDirectory: true
+  }
+}
