@@ -13,7 +13,7 @@ export function launchLinux(entries: LaunchEntry[], config: Config): void {
   for (const { dir, command } of entries) {
     const wslDir = `${wslRoot}/${dir}`
     const mode: PipelineMode = /\/(pr|commit)"?$/.test(command) ? 'quick' : 'full'
-    const bashCmd = buildWslWorkspaceCmd(wslDir, command, mode)
+    const bashCmd = buildWslWorkspaceCmd(wslDir, command, { mode, opsCopyFiles: config.opsCopyFiles ?? [] })
 
     if (isAvailable('gnome-terminal')) {
       spawn('gnome-terminal', ['--title', dir, '--', 'bash', '-lic', bashCmd], {

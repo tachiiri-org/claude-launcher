@@ -6,6 +6,7 @@ export interface Config {
   wslDistro: string
   wslRoot: string
   dirCommands: Record<string, string>
+  opsCopyFiles: string[]
 }
 
 // Entry used across IPC boundary for launching workspaces

@@ -12,7 +12,7 @@ export function buildWtArgs(entries: LaunchEntry[], config: Config): string[] {
     const { dir, command } = entries[i]
     const wslDir = `${wslRoot}/${dir}`
     const mode: PipelineMode = /\/(pr|commit)"?$/.test(command) ? 'quick' : 'full'
-    const bashCmd = buildWslWorkspaceCmd(wslDir, command, mode)
+    const bashCmd = buildWslWorkspaceCmd(wslDir, command, { mode, opsCopyFiles: config.opsCopyFiles ?? [] })
     args.push('new-tab', '--title', dir, '--profile', distro, '--', 'wsl', '-d', distro, 'bash', '-lic', bashCmd)
   }
 

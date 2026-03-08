@@ -70,7 +70,9 @@ export default function DirList({
       {grouped.ungrouped.length === 0 && (
         <div className="text-slate-500 text-sm px-1 mb-2">No ungrouped directories</div>
       )}
-      {grouped.ungrouped.map(renderDir)}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+        {grouped.ungrouped.map(renderDir)}
+      </div>
 
       {/* Groups */}
       {Object.entries(grouped.groups).map(([name, list]) => (
@@ -83,7 +85,9 @@ export default function DirList({
             onDropDir={(dir) => onMoveDir(dir, name)}
           />
           {list.length === 0 && <div className="text-slate-500 text-sm px-1 mb-2">Empty</div>}
-          {list.map(renderDir)}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+            {list.map(renderDir)}
+          </div>
         </div>
       ))}
     </div>

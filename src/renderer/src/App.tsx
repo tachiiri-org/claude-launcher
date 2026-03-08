@@ -3,6 +3,7 @@ import type { Config } from '@shared/types'
 import DirList from './components/DirList'
 import PresetPanel from './components/PresetPanel'
 import ExcludePanel from './components/ExcludePanel'
+import OpsCopyPanel from './components/OpsCopyPanel'
 import Settings from './components/Settings'
 import { useConfig } from './hooks/useConfig'
 import { useDirSelection } from './hooks/useDirSelection'
@@ -100,6 +101,10 @@ export default function App() {
               const { newDirs } = await updateConfig({ exclude })
               if (newDirs) pruneToDirs(newDirs)
             }}
+          />
+          <OpsCopyPanel
+            opsCopyFiles={config.opsCopyFiles ?? []}
+            onChange={(opsCopyFiles) => updateConfig({ opsCopyFiles })}
           />
           <Settings
             wslDistro={config.wslDistro}
